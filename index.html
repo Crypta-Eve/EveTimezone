@@ -1,76 +1,88 @@
 <html>
-    <head>
-        <title>Eve Entity Timezone Activity Calculator</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="static/css/pure-min.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="static/css/main.css">
-        <link rel="stylesheet" href="static/css/font-awesome.min.css">
-        <!-- this is to override the stupid element that the highcharts theme creates, which doenst work with local files. -->
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Unica+One">
-        <script type="text/javascript" src="static/dist.min.js?201804231713"></script>
-    </head>
 
-    <body>
-        <div class="page-wrap">
-            <div class="container">
-                <div class="pure-g">
-                    <div class="pure-u-1-4">
-                        <h2 style="margin-top: 13px;">Killboard Timezone Search</h2>
-                    </div>
-                    <div class="pure-u-3-4">
-                        <form id="entitySearchForm" class="pure-form">
-                            <fieldset>
-                                <input type="text" id="entityName" placeholder="Name">
-                                <select name="entityType" id="entityType">
-                                    <option value="character" selected>Character</option>
-                                    <option value="corporation">Corporation</option>
-                                    <option value="alliance">Alliance</option>
-                                    <option value="solar_system">Solar System</option>
-                                </select>
-                                <button type="submit" id="searchButton" class="pure-button pure-button-primary">
-                                    <i class="fa fa-search"></i>
-                                    <span>Search</span>
-                                </button>
-                                <label for="highAccuracy">
-                                    <input id="highAccuracy" type="checkbox" value="True"> Extended Data
-                                </label>
-                                &nbsp;&nbsp;
-                                <label for="wSpace">
-                                    <input id="wSpace" type="checkbox" value="True"> W-Space
-                                </label>
-                                <!-- <button type="button" id="imgurUpload" class="pure-button pure-button-secondary pure-button-disabled" disabled style="float: right;">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142223437-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-142223437-1');
+    </script>
+
+    <title>Eve Entity Timezone Activity Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/css/pure-min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/css/font-awesome.min.css">
+    <!-- this is to override the stupid element that the highcharts theme creates, which doenst work with local files. -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Unica+One">
+    <script type="text/javascript" src="static/dist.min.js?201804231713"></script>
+</head>
+
+<body>
+    <div class="page-wrap">
+        <div class="container">
+            <div class="pure-g">
+                <div class="pure-u-1-4">
+                    <h2 style="margin-top: 13px;">Killboard Timezone Search</h2>
+                </div>
+                <div class="pure-u-3-4">
+                    <form id="entitySearchForm" class="pure-form">
+                        <fieldset>
+                            <input type="text" id="entityName" placeholder="Name">
+                            <select name="entityType" id="entityType">
+                                <option value="character" selected>Character</option>
+                                <option value="corporation">Corporation</option>
+                                <option value="alliance">Alliance</option>
+                                <option value="solar_system">Solar System</option>
+                            </select>
+                            <button type="submit" id="searchButton" class="pure-button pure-button-primary">
+                                <i class="fa fa-search"></i>
+                                <span>Search</span>
+                            </button>
+                            <label for="highAccuracy">
+                                <input id="highAccuracy" type="checkbox" value="True"> Extended Data
+                            </label>
+                            &nbsp;&nbsp;
+                            <label for="wSpace">
+                                <input id="wSpace" type="checkbox" value="True"> W-Space
+                            </label>
+                            <!-- <button type="button" id="imgurUpload" class="pure-button pure-button-secondary pure-button-disabled" disabled style="float: right;">
                                     <i class="fa fa-cloud-upload"></i>
                                     <span>Upload to Imgur</span>
                                 </button> -->
-                            </fieldset>
-                        </form>
-                    </div>
+                        </fieldset>
+                    </form>
                 </div>
-            </div>
-            <div class="error container" id="error" style="display: none;">
-                <!-- error messages go here -->
-                <span></span>
-                <i class="fa fa-times"></i>
-            </div>
-            <div class="container" id="chart">
-                <!-- The chart goes in here -->
-            </div>
-            <div id="history">
-                <!-- The history of graphs goes here -->
             </div>
         </div>
-        <!-- <div id="hidden-img-bucket" class="hidden-img-bucket">
+        <div class="error container" id="error" style="display: none;">
+            <!-- error messages go here -->
+            <span></span>
+            <i class="fa fa-times"></i>
+        </div>
+        <div class="container" id="chart">
+            <!-- The chart goes in here -->
+        </div>
+        <div id="history">
+            <!-- The history of graphs goes here -->
+        </div>
+    </div>
+    <!-- <div id="hidden-img-bucket" class="hidden-img-bucket">
             <img id="hidden-img-bucket" src="" alt="">
         </div> -->
-        <footer class="site-footer container">
-            <div style="float: right; text-align: right;">
-                <div class="donations">
-                    <a href="#">
-                        <span class="donation-info"><span>Donations</span></span>
-                    </a>
-                </div>
-                Source on <a href="https://github.com/Krylik/EveTimezone">github</a>.
+    <footer class="site-footer container">
+        <div style="float: right; text-align: right;">
+            <div class="donations">
+                <a href="#">
+                    <span class="donation-info"><span>Donations</span></span>
+                </a>
             </div>
-        </footer>
-    </body>
+            Source on <a href="https://github.com/Krylik/EveTimezone">github</a>.
+        </div>
+    </footer>
+</body>
+
 </html>
