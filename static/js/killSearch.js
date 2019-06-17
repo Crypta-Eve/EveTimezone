@@ -40,7 +40,7 @@ function killSearch(options, pages, callback, progress) {
                     }
                     return Promise.all(
                         j.map(function (km) {
-                            return fetch("https://esi.evetech.net/latest/killmails/" + km.killmail_id + "/" + km.zkb.hash + "/")
+                            return fetch("https://esi.evetech.net/v1/killmails/" + km.killmail_id + "/" + km.zkb.hash + "/")
                                 .then(function (response) {
                                     return response.json();
                                 })
