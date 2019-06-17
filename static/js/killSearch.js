@@ -38,26 +38,28 @@ function killSearch(options, pages, callback, progress) {
                     if (progress) {
                         progress(Math.round(finished / pages * 100));
                     }
-                    var k = [];
-                    for (const km of j){
-                        fetch("https://esi.evetech.net/latest/killmails/" + km.killmail_id + "/" + km.zkb.hash + "/")
-                        .then(function(response) {
-                            return response.json();
+                    return Promise.all(
+                        j.map(function (km) {
+                            return fetch("https://esi.evetech.net/latest/killmails/" + km.killmail_id + "/" + km.zkb.hash + "/")
+                                .then(function (response) {
+                                    return response.json();
+                                })
+                                .then(function (esikm) {
+                                    let result = {};
+                                    Object.keys(km).forEach(key => result[key] = km[key])
+                                    Object.keys(esikm).forEach(key => result[key] = esikm[key])
+                                    return result;
+                                });
                         })
-                        .then(function(esikm) {
-                            let result = {};
-                            Object.keys(km).forEach(key => result[key] = km[key])
-                            Object.keys(esikm).forEach(key => result[key] = esikm[key])
-                            k = k.concat(result)
-                        })
-                    }
-                    console.log(k);
-                    return next(null, k);
+                    )
+                        .then(function (k) {
+                            return next(null, k);
+                        });
                 })
                 .catch(function (e) {
                     console.error(e);
                 });
-        }, (n - 1) * 10000);
+        }, (n - 1) * 1000);
     }, function (err, data) {
         var concatData = [];
         var esifinished = 0;
@@ -65,37 +67,7 @@ function killSearch(options, pages, callback, progress) {
         data.forEach(function (set) {
             concatData = concatData.concat(set);
         })
-
-        // const esiscrape = async () => {
-        //     await asyncForEach(concatData, async (zkb) => {
-        //         let id = zkb.killmail_id;
-        //         let hash = zkb.zkb.hash;
-        //         var result = {};
-        //         fetch("https://esi.evetech.net/latest/killmails/" + id + "/" + hash + "/")
-        //             .then(function (response) {
-        //                 return response.json();
-        //             })
-        //             .then(function (j) {
-        //                 esifinished += 1
-        //                 if (progress) {
-        //                     progress(Math.round((esifinished / concatData.length * 50) + 50))
-        //                 }
-
-        //                 Object.keys(zkb).forEach(key => result[key] = zkb[key])
-        //                 Object.keys(j).forEach(key => result[key] = j[key])
-        //                 console.log(result)
-        //                 finalConcatData = finalConcatData.concat(result)
-        //             })
-        //             .catch(function (e) {
-        //                 console.error(e);
-        //             });
-        //     });
-
-            console.log(concatData);
-            callback(err, concatData);
-    
-
-
+        callback(err, concatData);
     });
 }
 
