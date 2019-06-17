@@ -2,9 +2,9 @@ var request = require('superagent');
 var $ = require('jquery');
 
 function EntitySearch(entityType, entityName, callback) {
-    var searchUrl = 'https://esi.tech.ccp.is/v2/search/';
+    var searchUrl = 'https://esi.evetech.net/v2/search/';
 
-    fetch('https://esi.tech.ccp.is/v2/search/?' + $.param({
+    fetch('https://esi.evetech.net/v2/search/?' + $.param({
         categories: entityType,
         search: entityName,
         strict: true
